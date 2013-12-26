@@ -16,12 +16,46 @@ The logging utility is written in python and the database is maintained using [S
 
 Viewing and interacting with the database is done through a browser, entirely through the localhost machine via lightweight local webserver setup by [CherryPy](http://www.cherrypy.org/). In the future, analytical tools will be developed to query the database and pull out meaningful statistics and generate summaries.
 
+## Configuration File
+
+You may choose to override some or more features of the Personal Logger by Using a Config File. The default location of the configuration file can be found at config directory in the default program location. The default location of the file is "config/default.yml". Include the following lines in the config file to start.
+
+	DB_FILE: /home/saurajeet/.logger/universe.db
+	MEDIA_DIRECTORY: /home/saurajeet/Pictures
+
 
 ## Usage
 
-The file util.py has a bunch of utilities for managing databases, including one important one for initializing the events table. That must be run first (util.py -> initialize_log()).  
+The file actions.py has a bunch of utilities for managing databases, including one important one for initializing the events table.
 
-Once the log exists, the DB_PATH variable must be hardcoded in util.py to make sure it has the full path to the table, after which the following script will add an entry to the database.
+	$ python action.py -h
+	usage: action.py [-h] [-c CONFIG] [-m] [-u] [-i]
+	
+	A Tool to initialize the database for the Logger
+	
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -c CONFIG, --config CONFIG
+	                        Configuration File to Be Read; DEFAULT:
+	                        config/default.yml
+	  -m, --createmedia     Intialize Media MetaData into the database
+	  -u, --updatemedia     Update Media MetaData into the database
+	  -i, --initall         Initialize All Databases with Metadata
+		
+	$ python action.py --initall
+	Initializing All Databases
+	Creating tables for events, people, locations
+	Creating tables for todo
+	Creating calendar
+
+	$ python action.py --createmedia
+	Creating Meta Data Media Database Meta On DB_FILE
+ 
+	$ python action.py --updatemedia
+	Updating Media Database..
+	
+
+Once Meta of all Tables have been generated, we are good to start logging our personal events
 
 	python /path/to/Logger/log.py log "this is the text i want to log"
 
