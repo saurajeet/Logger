@@ -29,33 +29,26 @@ def initialize_log():
 	
 # be careful using these! uncomment if you intend to erase the databases
 def create_log():
-	print "creating tables for events, people, locations"
-	#query_db('DROP TABLE events')
-	#query_db('DROP TABLE people')
-	#query_db('DROP TABLE locations')
-	#query_db('CREATE TABLE events (category TEXT, time DATETIME, latitude DOUBLE, longitude DOUBLE, log TEXT)')
-	#query_db('CREATE TABLE people (name TEXT, alias TEXT)')
-	#query_db('CREATE TABLE locations (name TEXT, latitude DOUBLE, longitude DOUBLE)')
+	print "Creating tables for events, people, locations"
+	query_db('CREATE TABLE IF NOT EXISTS events (category TEXT, time DATETIME, latitude DOUBLE, longitude DOUBLE, log TEXT)')
+	query_db('CREATE TABLE IF NOT EXISTS people (name TEXT, alias TEXT)')
+	query_db('CREATE TABLE IF NOT EXISTS locations (name TEXT, latitude DOUBLE, longitude DOUBLE)')
 
 # be careful using these! uncomment if you intend to erase the databases
 def create_todo():
-	print "creating tables for todo"
-	#query_db('DROP TABLE todo')
-	#query_db('DROP TABLE todo_lists')
-	#query_db('DROP TABLE todo_archive')
-	#query_db('CREATE TABLE todo (id INTEGER PRIMARY KEY, description TEXT, list_id INTEGER, parent_id INTEGER, status INTEGER, created DATETIME, completed DATETIME)')
-	#query_db('CREATE TABLE todo_archive (id INTEGER, description TEXT, list_id INTEGER, parent_id INTEGER, created DATETIME, completed DATETIME, archived DATETIME)')
-	#query_db('CREATE TABLE todo_lists (id INTEGER PRIMARY KEY, name TEXT, created DATETIME, archived DATETIME)')
+	print "Creating tables for todo"
+	query_db('CREATE TABLE IF NOT EXISTS todo (id INTEGER PRIMARY KEY, description TEXT, list_id INTEGER, parent_id INTEGER, status INTEGER, created DATETIME, completed DATETIME)')
+	query_db('CREATE TABLE IF NOT EXISTS todo_archive (id INTEGER, description TEXT, list_id INTEGER, parent_id INTEGER, created DATETIME, completed DATETIME, archived DATETIME)')
+	query_db('CREATE TABLE IF NOT EXISTS todo_lists (id INTEGER PRIMARY KEY, name TEXT, created DATETIME, archived DATETIME)')
 
 def create_calendar():
-	print "creating calendar"
-	#query_db('DROP TABLE calendar')
-	#query_db('CREATE TABLE calendar (id INTEGER PRIMARY KEY, name TEXT, description TEXT, start DATETIME, end DATETIME, created DATETIME)')
+	print "Creating calendar"
+	query_db('DROP TABLE calendar')
+	query_db('CREATE TABLE calendar (id INTEGER PRIMARY KEY, name TEXT, description TEXT, start DATETIME, end DATETIME, created DATETIME)')
 
 def create_media():
-	print "creating database of images and sounds"
-	query_db('DROP TABLE media')
-	query_db('CREATE TABLE media (id INTEGER PRIMARY KEY, type TEXT, filepath TEXT, time DATETIME)')
+	print "Creating database of images and sounds"
+	query_db('CREATE TABLE IF NOT EXISTS  media (id INTEGER PRIMARY KEY, type TEXT, filepath TEXT, time DATETIME)')
 	
 def update_media():
 	for root, dirs, files in os.walk('/Users/Gene/Pictures/'):
@@ -75,5 +68,5 @@ def format_time(ts):
 	timestring = "%s %s %s:%s" % (months[int(dt[1])-1], dt[2], tm[0], tm[1])
 	return timestring
 	
-#create_media()
+create_media()
 #update_media()
